@@ -1,0 +1,269 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/slide.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Functional Programming in JS</h1>
+					<p>
+						<small>Created by <a href="https://ranjithnair.github.io">Ranjith Nair</a></small>
+					</p>
+				</section>
+				<section>
+					<img src="https://i.imgflip.com/1nrglx.jpg"></img>
+				</section>
+				<section>
+					<h2>What is FP?</h2>
+					<ul>
+						<li>Programming Paradigm</li>
+						<li>Declarative in nature rather than imperative.</li>
+						<li>Application state flows through pure functions.</li>
+						<li>Change in mindset to approach a problem.</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Programming Paradigms in JS</h3>
+					<ul>
+						<li>Imperative JS</li>
+						<li>Object Oriented JS</li>
+						<li>Functional JS</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Imperative JS</h3>
+					<pre>
+						<code>
+'use strict';
+
+function imperativeSquare(arr) {
+  /* You have to specify the followings :
+      1. How to loop throgh the array
+      2. The order of looping
+      3. Logic
+  */
+  for (var i = 0; i < arr.length; i++) {
+  	arr[i] *= arr[i];
+  }
+  return arr;
+}
+
+var a = [1, 2, 3, 4, 5];
+console.log(imperativeSquare(a)); // [1, 4, 9, 16, 25]
+						</code>
+					</pre>
+					<aside class="notes">
+
+					</aside>
+				</section>
+				<section>
+					<h3>Object Oriented JS</h3>
+					<p data-height="300" data-theme-id="0" data-slug-hash="YVWmdo" data-default-tab="js" data-user="ranjithnair" data-embed-version="2" data-pen-title="YVWmdo" class="codepen">See the Pen <a href="https://codepen.io/ranjithnair/pen/YVWmdo/">YVWmdo</a> by Ranjith (<a href="http://codepen.io/ranjithnair">@ranjithnair</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+					<aside class="notes">
+						Show the compiled version and the usage of prototypes.
+					</aside>
+				</section>
+				<section>
+					<h3>Functional JS</h3>
+					<pre>
+						<code>
+'use strict';
+
+function declarativeSquare(arr) {
+	/* You have to specify the followings :
+    	1. Logic
+  	*/
+	return arr.map((val) => val*val);
+}
+
+var a = [1, 2, 3, 4, 5];
+console.log(declarativeSquare(a)); // [1, 4, 9, 16, 25]
+						</code>
+					</pre>
+					<aside class="notes">
+							Cleaner code, easy to test. With ES6 the support for FP is awesome
+							JS allows both imperative and declarative
+					</aside>
+				</section>
+				<section>
+					<h3>Principles of FP</h3>
+					<ul>
+						<li>Side Effects</li>
+						<li>Pure Functions</li>
+						<li>Functional Composition</li>
+						<li>Immutability</li>
+						<li>Closure</li>
+						<li>Recursion</li>
+					</ul>
+				</section>
+				<section>
+					<h2>No Side effects</h2>
+					<ul>
+						<li>Function should produce same output at any point of time given same input.</li>
+						<li>Easier to test.</li>
+						<li>Side effects can cause bugs which are difficult to identify.</li>
+					</ul>
+				</section>
+				<section>
+					<h2>No Side effects</h2>
+					<pre>
+						<code>
+// A function with a side effect
+var x = 10;
+
+const myFunc = function ( y ) {
+x = x + y;
+};
+
+myFunc( 3 );
+console.log( x ); // 13
+
+myFunc( 3 );
+console.log( x ); // 16
+						</code>
+					</pre>
+
+				</section>
+				<section>
+					<h2>Write Pure Functions</h2>
+					<pre>
+						<code>
+// Make the global variable local.
+const myFunc = function ( y ) {
+  const x = 10;
+  return x + y;
+}
+
+console.log(myFunc( 3 )); // 13
+console.log(myFunc( 3 )); // 13
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h3>Function Composition</h3>
+					<p>Combine functions to form new functions</p>
+					<pre>
+						<code>
+// The function addThenSquare is made by combining the functions add and square.
+const add = function ( x, y ) {
+  return x + y;
+};
+
+const square = function ( x ) {
+  return x * x;
+};
+
+const addThenSquare = function ( x, y ) {
+  return square(add( x, y ));
+};
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Currying</h2>
+					<ul>
+						<li>
+							Spice up your Javascript code 🌶️ 🌶️.
+						</li>
+						<li>
+							Function doesnt take all of its arguments upfront.
+						</li>
+						<li>
+							Function returns another function and so on and each of them is invoked by seperate params.
+						</li>
+						<li>
+							Partially calling a function with few arguments which returns another function.
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Currying</h2>
+					<p data-height="363" data-theme-id="0" data-slug-hash="wdzwde" data-default-tab="js" data-user="ranjithnair" data-embed-version="2" data-pen-title="Currying" class="codepen">See the Pen <a href="https://codepen.io/ranjithnair/pen/wdzwde/">Currying</a> by Ranjith (<a href="http://codepen.io/ranjithnair">@ranjithnair</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+					<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+				<section>
+					<h2>Currying in React</h2>
+					<pre>
+						<code>
+render() {
+  return (
+    {renderIf(1 + 2 === 3)(
+      <span>This works!</span>
+    )}
+  );
+}
+const renderIf = predicate => element => predicate && element;
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Immutability</h2>
+					<ul>
+						<li>Immutable --> If an object is immutable, its value cannot be modified after creation.</li>
+						<li>If an object is mutable, its value can be modified after creation.</li>
+						<li>Immutability exist by design in JS - strings & number literals</li>
+						<li>However, Objects & Arrays are mutable by design.</li>
+						<li>Whenever you want to make any change, return a new instance of that</li>
+						<li>Similar to "Save As" :)
+					</ul>
+				</section>
+				<section>
+					<h2>Why Immutability?</h2>
+					<ul>
+						<li>Mutation is a side effect.</li>
+						<li>Stricter control over data</li>
+						<li>Able to do undo/redo operations easily</li>
+						<li>Time travel debugging</li>
+						<li>Better performance in React (compare before & after - only rerender when needed)
+					</ul>
+				</section>
+				<section>
+					<h2>Immutability Examples</h2>
+					<p data-height="350" data-theme-id="0" data-slug-hash="Emgxxa" data-default-tab="js" data-user="ranjithnair" data-embed-version="2" data-pen-title="Immutability" class="codepen">See the Pen <a href="https://codepen.io/ranjithnair/pen/Emgxxa/">Immutability</a> by Ranjith (<a href="http://codepen.io/ranjithnair">@ranjithnair</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="https://production-assets.codepen.io/assets/embed/ei.js"></script>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
